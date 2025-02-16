@@ -50,6 +50,7 @@ public class MainForm extends javax.swing.JDialog {
         jMenu8 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu11 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -73,6 +74,9 @@ public class MainForm extends javax.swing.JDialog {
         jMenu17 = new javax.swing.JMenu();
         jMenuItem27 = new javax.swing.JMenuItem();
         jMenuItem26 = new javax.swing.JMenuItem();
+        jMenu14 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
 
@@ -165,6 +169,15 @@ public class MainForm extends javax.swing.JDialog {
             }
         });
         jMenu8.add(jMenuItem11);
+
+        jMenuItem19.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuItem19.setText("pretraga predmeta");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem19);
 
         jMenu2.add(jMenu8);
 
@@ -341,6 +354,29 @@ public class MainForm extends javax.swing.JDialog {
         });
         jMenu17.add(jMenuItem26);
 
+        jMenu14.setText("pretraga dezurtsva");
+        jMenu14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuItem5.setText("po takmicenju na koje se odnosi");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem5);
+
+        jMenuItem16.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuItem16.setText("po rasporedjenom nastavniku");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem16);
+
+        jMenu17.add(jMenu14);
+
         jMenu4.add(jMenu17);
 
         jMenuBar1.add(jMenu4);
@@ -466,6 +502,18 @@ public class MainForm extends javax.swing.JDialog {
         new PrikazSaleForm(null, true).setVisible(true);
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        new PretragaSaleForm(null, true, "stavka").setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        new PretragaSaleForm(null, true, "nastavnik").setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        new PretragaPredmetForm(null, true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -514,6 +562,7 @@ public class MainForm extends javax.swing.JDialog {
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
     private javax.swing.JMenu jMenu13;
+    private javax.swing.JMenu jMenu14;
     private javax.swing.JMenu jMenu15;
     private javax.swing.JMenu jMenu16;
     private javax.swing.JMenu jMenu17;
@@ -533,8 +582,10 @@ public class MainForm extends javax.swing.JDialog {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem21;
@@ -545,6 +596,7 @@ public class MainForm extends javax.swing.JDialog {
     private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;

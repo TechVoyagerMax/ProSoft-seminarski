@@ -62,6 +62,12 @@ public class TakmicenjeTableModel extends AbstractTableModel {
         return columns[column];
     }
     
+    public Takmicenje get(int index){
+        if(index<0){
+            throw new ArrayIndexOutOfBoundsException(index);
+        }
+        return list.get(index);
+    }
     
     
 }

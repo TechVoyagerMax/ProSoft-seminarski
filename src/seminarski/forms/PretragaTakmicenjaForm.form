@@ -49,8 +49,10 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="btnRezultati" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnDetalji" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnDetalji2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnDetalji1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -79,8 +81,9 @@
               <Component id="jScrollPane1" min="-2" pref="127" max="-2" attributes="0"/>
               <EmptySpace pref="36" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnDetalji" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnDetalji1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnRezultati" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnDetalji2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
           </Group>
@@ -151,7 +154,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Razred&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="btnDetalji">
+    <Component class="javax.swing.JButton" name="btnDetalji1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Uvid u detalje"/>
       </Properties>
@@ -159,6 +162,11 @@
     <Component class="javax.swing.JButton" name="btnRezultati">
       <Properties>
         <Property name="text" type="java.lang.String" value="Unos rezultata"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnDetalji2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Uvid u detalje"/>
       </Properties>
     </Component>
   </SubComponents>

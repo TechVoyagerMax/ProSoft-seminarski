@@ -20,6 +20,14 @@ public class SalaTableModel extends AbstractTableModel {
         sale=Controller.getInstance().vratiListuSveSale();
     }
     
+    public SalaTableModel(Nastavnik n)throws Exception{
+        sale=Controller.getInstance().pretraziSala(n);
+    }
+    
+    public SalaTableModel(StavkaTakmicenja st) throws Exception{
+        sale=Controller.getInstance().pretraziSala(st);
+    }
+    
     @Override
     public int getRowCount() {
         return sale.size();

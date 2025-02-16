@@ -308,6 +308,7 @@ public class TakmicenjeForm extends javax.swing.JDialog {
                             stavka_stavke.setStavka(stavka);
                             stavka_stavke.setTakmicenje(takm);
                             stavka_stavke.setUcenik((Ucenik)comboUcenik.getSelectedItem());
+                            stavka_stavke.setRang(Rang.BEZ_RANGA);
                             stavka_stavke.setId(Controller.getInstance().kreirajStavkuStavku(takm, stavka, stavka_stavke));
                             if(stavka_stavke.getId()!=0){
                                 JOptionPane.showMessageDialog(this, "Uspesno sacuvano");
@@ -328,6 +329,7 @@ public class TakmicenjeForm extends javax.swing.JDialog {
                        st_stavke.setStavka(stavka_postoji);
                        st_stavke.setTakmicenje(takm);
                        st_stavke.setUcenik((Ucenik)comboUcenik.getSelectedItem());
+                       st_stavke.setRang(Rang.BEZ_RANGA);
                        st_stavke.setId(Controller.getInstance().kreirajStavkuStavku(takm, stavka_postoji, st_stavke));
                        if(st_stavke.getId()!=0){
                            JOptionPane.showMessageDialog(this, "Uspesno sacuvano");
@@ -358,6 +360,7 @@ public class TakmicenjeForm extends javax.swing.JDialog {
                         nova_stavkaStavke.setTakmicenje(takmPost);
                         nova_stavkaStavke.setStavka(stav);
                         nova_stavkaStavke.setUcenik((Ucenik)comboUcenik.getSelectedItem());
+                        nova_stavkaStavke.setRang(Rang.BEZ_RANGA);
                         nova_stavkaStavke.setId(Controller.getInstance().kreirajStavkuStavku(takmPost, stav, nova_stavkaStavke));
                         if(nova_stavkaStavke.getId()!=0){
                             JOptionPane.showMessageDialog(this, "Uspenso kreirano");
@@ -378,6 +381,7 @@ public class TakmicenjeForm extends javax.swing.JDialog {
                     ssss.setStavka(require);
                     ssss.setTakmicenje(takmPost);
                     ssss.setUcenik((Ucenik)comboUcenik.getSelectedItem());
+                    ssss.setRang(Rang.BEZ_RANGA);
                     ssss.setId(Controller.getInstance().kreirajStavkuStavku(takmPost, require, ssss));
                     if(ssss.getId()!=0){
                         JOptionPane.showMessageDialog(this, "Uspesno sacuvano!");

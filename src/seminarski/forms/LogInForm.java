@@ -110,7 +110,7 @@ public class LogInForm extends javax.swing.JDialog {
         Nastavnik n=new Nastavnik();
         n.setUsername(newUser);
         n.setPassword(password);
-        String ime=Controller.getInstance().prijaviNastavnik(n);
+        String ime=Controller.getInstance().prijaviNastavnik(newUser,password);
         if(!ime.equals("")){
             n.setIme(ime);
             JOptionPane.showMessageDialog(this, "Usesno ste se prijavili!\nDobrodosli, "+n.getIme());

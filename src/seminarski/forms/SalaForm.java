@@ -205,13 +205,13 @@ public class SalaForm extends javax.swing.JDialog {
                     .addComponent(jLabel6)
                     .addComponent(txtVremeDezurstva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(spinerSati, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(spinerMinuti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtMIN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtMIN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -230,6 +230,11 @@ public class SalaForm extends javax.swing.JDialog {
         });
 
         btnIzmeni.setText("Izmeni");
+        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniActionPerformed(evt);
+            }
+        });
 
         btnPromeni.setText("Promeni");
         btnPromeni.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +301,7 @@ public class SalaForm extends javax.swing.JDialog {
             sala.setTrajanje(spinerSati.getValue()+txtH.getText()+" "+spinerMinuti.getValue()+txtMIN.getText());
             int odg=JOptionPane.showConfirmDialog(this, "Da li ste sigurni da zelite da sacuvate?","Potvrda",JOptionPane.YES_NO_OPTION);
             if(odg==0){
-                if(Controller.getInstance().kreirajSalaAsocijativna(sala)){
+                if(Controller.getInstance().UbaciSalaAsocijativna(sala)){
                     JOptionPane.showMessageDialog(this, "Uspesno sacuvano");
                     this.setVisible(false);
                 }else{
@@ -340,6 +345,28 @@ public class SalaForm extends javax.swing.JDialog {
         spinerMinuti.setEnabled(true);
         spinerSati.setEnabled(true);
     }//GEN-LAST:event_btnPromeniActionPerformed
+
+    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
+        Sala zaIzmenu=new Sala();
+        zaIzmenu.setNastavnik((Nastavnik)comboNastavnik.getSelectedItem());
+        zaIzmenu.setTakmicenje((Takmicenje)comboTakmicenje.getSelectedItem());
+        zaIzmenu.setStavka((StavkaTakmicenja)comboStavka.getSelectedItem());
+        zaIzmenu.setBroj_sale(Integer.parseInt(txtBrojSale.getText()));
+        zaIzmenu.setVreme_pocetka(txtVremeDezurstva.getText());
+        zaIzmenu.setTrajanje(spinerSati.getValue()+txtH.getText()+" "+spinerMinuti.getValue()+txtMIN.getText());
+        int odg=JOptionPane.showConfirmDialog(this, "Da li ste sigurni da zelite da sacuvate izmene?", "Potvrda", JOptionPane.YES_NO_OPTION);
+        if(odg==0){
+            if(Controller.getInstance().promeniSala(zaIzmenu)){
+                JOptionPane.showMessageDialog(this, "Uspesno izmenjeno");
+                this.setVisible(false);
+                new PrikazSaleForm(null, true).setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(this, "Greska prilikom cuvanja izmena","Greska",JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Nece biti sacuvane izmene!");
+        }
+    }//GEN-LAST:event_btnIzmeniActionPerformed
 
     /**
      * @param args the command line arguments

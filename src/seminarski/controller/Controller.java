@@ -26,8 +26,8 @@ public class Controller {
         return instance;
     }
     
-    public String prijaviNastavnik(Nastavnik n){
-        return dbb.prijaviNastavnik(n);
+    public String prijaviNastavnik(String korisnickoIme, String sifra){
+        return dbb.prijaviNastavnik(korisnickoIme,sifra);
     }
     
     public long kreirajUcenik(Ucenik u){
@@ -75,8 +75,8 @@ public class Controller {
         return dbb.krairajStavkuStavke(t, st, sst);
     }
     
-    public boolean kreirajSalaAsocijativna(Sala s){
-        return dbb.kreirajSalaAsocijativna(s);
+    public boolean UbaciSalaAsocijativna(Sala s){
+        return dbb.UbaciSalaAsocijativna(s);
     }
     
     public ArrayList<Razred> vratiListuSviRazred(){
@@ -272,6 +272,10 @@ public class Controller {
         return dbb.promeniUcenik(u);
     }
     
+    public boolean promeniPredmet(Predmet p){
+        return dbb.promeniPredmet(p);
+    }
+    
     public boolean promeniSkola(Skola sk){
         return dbb.promeniSkola(sk);
     }
@@ -283,4 +287,21 @@ public class Controller {
 //    public boolean promeniTerminDezurstva(TerminDezurstva td){
 //        return dbb.promeniTerminDezurstva(td);
 //    }
+    
+    
+    public boolean promeniSala(Sala sala){
+        return dbb.promeniSala(sala);
+    }
+    
+    public ArrayList<Sala> pretraziSala(Nastavnik n){
+        return dbb.vratiListuPretraziSala(n);
+    }
+    
+    public ArrayList<Sala> pretraziSala(StavkaTakmicenja stavka){
+        return dbb.vratiListuSala(stavka);
+    }
+    
+    public ArrayList<Predmet> vratiListuPredmet(Predmet p){
+        return dbb.vratiListuPredmet(p);
+    }
 }

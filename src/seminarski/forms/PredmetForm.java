@@ -48,6 +48,8 @@ public class PredmetForm extends javax.swing.JDialog {
         btnSacuvaj = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnObrisi = new javax.swing.JButton();
+        btnIzmeni = new javax.swing.JButton();
+        btnPromeni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -72,6 +74,20 @@ public class PredmetForm extends javax.swing.JDialog {
             }
         });
 
+        btnIzmeni.setText("Izmeni");
+        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniActionPerformed(evt);
+            }
+        });
+
+        btnPromeni.setText("Omoguci promenu");
+        btnPromeni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPromeniActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,23 +95,26 @@ public class PredmetForm extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSacuvaj))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPromeni)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnIzmeni)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnObrisi))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNaziv, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnObrisi, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(46, 46, 46))
+                            .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,7 +131,9 @@ public class PredmetForm extends javax.swing.JDialog {
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSacuvaj)
-                    .addComponent(btnObrisi))
+                    .addComponent(btnObrisi)
+                    .addComponent(btnIzmeni)
+                    .addComponent(btnPromeni))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -182,6 +203,31 @@ public class PredmetForm extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnObrisiActionPerformed
 
+    private void btnPromeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromeniActionPerformed
+        btnSacuvaj.setVisible(false);
+        btnIzmeni.setVisible(true);
+        btnPromeni.setVisible(false);
+        txtNaziv.setEnabled(true);
+    }//GEN-LAST:event_btnPromeniActionPerformed
+
+    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
+        Predmet zaIzmenu=new Predmet();
+        zaIzmenu.setId(Long.parseLong(txtId.getText()));
+        zaIzmenu.setNaziv(txtNaziv.getText());
+        int odg=JOptionPane.showConfirmDialog(this, "Da li ste sigurni da zelite da sacuvate izmene?","Potvrda",JOptionPane.YES_NO_OPTION);
+        if(odg==0){
+            if(Controller.getInstance().promeniPredmet(zaIzmenu)){
+                JOptionPane.showMessageDialog(this, "Uspesno sacuvane izmene");
+                this.setVisible(false);
+                new PrikazPredmetaForm(null, true).setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(this, "Greska prilikom cuvanja izmena.","Greska",JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Nece biti izmenjeno");
+        }
+    }//GEN-LAST:event_btnIzmeniActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -228,6 +274,8 @@ public class PredmetForm extends javax.swing.JDialog {
         txtId.setVisible(false);
         lblId.setVisible(false);
         btnObrisi.setVisible(false);
+        btnIzmeni.setVisible(false);
+        btnPromeni.setVisible(false);
     }
     
     private void forView(Predmet p){
@@ -237,6 +285,7 @@ public class PredmetForm extends javax.swing.JDialog {
         txtNaziv.setText(p.getNaziv());
         txtId.setEnabled(false);
         txtNaziv.setEnabled(false);
+        btnIzmeni.setVisible(false);
     }
     
     private boolean novUnos(){
@@ -252,7 +301,9 @@ public class PredmetForm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIzmeni;
     private javax.swing.JButton btnObrisi;
+    private javax.swing.JButton btnPromeni;
     private javax.swing.JButton btnSacuvaj;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

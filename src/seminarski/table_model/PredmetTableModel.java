@@ -21,6 +21,10 @@ public class PredmetTableModel extends AbstractTableModel {
     public PredmetTableModel(){
         predmeti=Controller.getInstance().vratiListuSviPredmet();
     }
+    
+    public PredmetTableModel(ArrayList<Predmet> lista) throws Exception{
+        predmeti=lista;
+    }
 
     @Override
     public int getRowCount() {

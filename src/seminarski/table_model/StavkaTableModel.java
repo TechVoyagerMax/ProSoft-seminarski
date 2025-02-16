@@ -23,6 +23,10 @@ public class StavkaTableModel extends AbstractTableModel {
         }
     }
     
+    public StavkaTableModel(Takmicenje t) throws Exception{
+        list=Controller.getInstance().vratiListuStavkiTakmicenja(t);
+    }
+    
     @Override
     public int getRowCount() {
         return list.size();

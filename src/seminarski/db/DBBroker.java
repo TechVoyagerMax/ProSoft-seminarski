@@ -20,8 +20,8 @@ import seminarski.domain.*;
  */
 public class DBBroker {
     
-    public String prijaviNastavnik(Nastavnik n){
-        String upit="SELECT * FROM nastavnik WHERE username='"+n.getUsername()+"' AND password='"+n.getPassword()+"'";
+    public String prijaviNastavnik(String korisnickoIme, String sifra){
+        String upit="SELECT * FROM nastavnik WHERE username='"+korisnickoIme+"' AND password='"+sifra+"'";
         Connection conn=DBConnection.getInstance().getConnection();
         String rezultat=null;
         try{
@@ -264,7 +264,7 @@ public class DBBroker {
     }
     
     public long krairajStavkuStavke(Takmicenje t, StavkaTakmicenja st, StavkaStavkeTakmicenja sst){
-        String upit="INSERT INTO stavka_stavke_takmicenja (id_takmicenja, id_stavke, id_ucenik, broj_poena) VALUES (?, ?, ?, ?)";
+        String upit="INSERT INTO stavka_stavke_takmicenja (id_takmicenja, id_stavke, id_ucenik, broj_poena, rang) VALUES (?, ?, ?, ?, ?)";
         Connection conn=DBConnection.getInstance().getConnection();
         long id=0l;
         try{
@@ -273,6 +273,7 @@ public class DBBroker {
             ps.setLong(2, st.getId());
             ps.setLong(3, sst.getUcenik().getId());
             ps.setInt(4, 0);
+            ps.setString(5, String.valueOf(sst.getRang()));
             ps.executeUpdate();
             ResultSet rs=ps.getGeneratedKeys();
             while(rs.next()){
@@ -286,7 +287,7 @@ public class DBBroker {
         return id;
     }
     
-    public boolean kreirajSalaAsocijativna(Sala s){
+    public boolean UbaciSalaAsocijativna(Sala s){
         String upit="INSERT INTO sala (id_nastavnik, id_takmicenja, id_stavka, broj_sale, vreme_pocetka_dezurstva, trajanje_dezurstva) VALUES (?, ?, ?, ?, ?, ?)";
         Connection conn=DBConnection.getInstance().getConnection();
         try{
@@ -750,6 +751,8 @@ public class DBBroker {
          }
          return list;
      }
+     
+     
      
      
      public ArrayList<Takmicenje> vratiListuTakmicenja(NivoTakmicenja nivo){
@@ -1336,6 +1339,22 @@ public class DBBroker {
      }
      
      
+     public boolean promeniPredmet(Predmet p){
+         String upit="UPDATE predmet SET naziv=? WHERE id="+p.getId();
+         Connection conn=DBConnection.getInstance().getConnection();
+         try{
+             PreparedStatement ps=conn.prepareStatement(upit);
+             ps.setString(1, p.getNaziv());
+             ps.executeUpdate();
+             ps.close();
+         }catch(SQLException e){
+             System.out.println(e.getMessage());
+             return false;
+         }
+         return true;
+     }
+     
+     
      public boolean promeniSkola(Skola sk){
          String upit="UPDATE skola SET naziv=? WHERE id="+sk.getId();
          Connection conn=DBConnection.getInstance().getConnection();
@@ -1386,5 +1405,108 @@ public class DBBroker {
 //         return true;
 //     }
      
+     public boolean promeniSala(Sala sala){
+         String upit="UPDATE sala SET vreme_pocetka_dezurstva=?, trajanje_dezurstva=?, broj_sale=? WHERE id_nastavnik="+sala.getNastavnik().getId()+" AND id_takmicenja="+sala.getTakmicenje().getId()+" AND id_stavka="+sala.getStavka().getId();
+         Connection conn=DBConnection.getInstance().getConnection();
+         try{
+             PreparedStatement ps=conn.prepareStatement(upit);
+             ps.setString(1, sala.getVreme_pocetka());
+             ps.setString(2, sala.getTrajanje());
+             ps.setInt(3, sala.getBroj_sale());
+             ps.executeUpdate();
+             ps.close();
+         }catch(SQLException e){
+             System.out.println(e.getMessage());
+             return false;
+         }
+         return true;
+     }
+     
+     
+     public ArrayList<Sala> vratiListuPretraziSala(Nastavnik nast){
+         ArrayList<Sala> pronadjena=new ArrayList<Sala>();
+         String upit="SELECT s.*,t.*,n.*,st.* FROM sala s JOIN nastavnik n ON s.id_nastavnik=n.id JOIN takmicenje t ON s.id_takmicenja=t.id JOIN stavka_takmicenja st ON s.id_stavka=st.id WHERE id_nastavnik="+nast.getId();
+         Connection conn=DBConnection.getInstance().getConnection();
+         try{
+             Statement stat=conn.createStatement();
+             ResultSet rs=stat.executeQuery(upit);
+             while(rs.next()){
+                 Sala sala=new Sala();
+                 sala.setBroj_sale(rs.getInt("s.broj_sale"));
+                 sala.setTrajanje(rs.getString("s.trajanje_dezurstva"));
+                 sala.setVreme_pocetka(rs.getString("s.vreme_pocetka_dezurstva"));
+                 Nastavnik n=new Nastavnik();
+                 n.setId(rs.getLong("n.id"));
+                 n.setIme(rs.getString("n.ime"));
+                 n.setPrezime(rs.getString("n.prezime"));
+                 n.setUsername(rs.getString("n.username"));
+                 sala.setNastavnik(n);
+                 Takmicenje t=Controller.getInstance().pretraziTakmicenje(rs.getLong("t.id"));
+                 StavkaTakmicenja st=Controller.getInstance().pretraziStavkuTakmicenja(rs.getLong("st.id"));
+                 sala.setTakmicenje(t);
+                 sala.setStavka(st);
+                 pronadjena.add(sala);
+             }
+             stat.close();
+             rs.close();
+         }catch(SQLException e){
+             System.out.println(e.getMessage());
+         }
+         return pronadjena;
+     }
+     
+     public ArrayList<Sala> vratiListuSala(StavkaTakmicenja stavka){
+         ArrayList<Sala> pronadjena=new ArrayList<Sala>();
+         String upit="SELECT s.*,t.*,n.*,st.* FROM sala s JOIN nastavnik n ON s.id_nastavnik=n.id JOIN takmicenje t ON s.id_takmicenja=t.id JOIN stavka_takmicenja st ON s.id_stavka=st.id WHERE id_stavka="+stavka.getId();
+         Connection conn=DBConnection.getInstance().getConnection();
+         try{
+             Statement stat=conn.createStatement();
+             ResultSet rs=stat.executeQuery(upit);
+             while(rs.next()){
+                 Sala sala=new Sala();
+                 sala.setBroj_sale(rs.getInt("s.broj_sale"));
+                 sala.setTrajanje(rs.getString("s.trajanje_dezurstva"));
+                 sala.setVreme_pocetka(rs.getString("s.vreme_pocetka_dezurstva"));
+                 Nastavnik n=new Nastavnik();
+                 n.setId(rs.getLong("n.id"));
+                 n.setIme(rs.getString("n.ime"));
+                 n.setPrezime(rs.getString("n.prezime"));
+                 n.setUsername(rs.getString("n.username"));
+                 sala.setNastavnik(n);
+                 Takmicenje t=Controller.getInstance().pretraziTakmicenje(rs.getLong("t.id"));
+                 StavkaTakmicenja st=Controller.getInstance().pretraziStavkuTakmicenja(rs.getLong("st.id"));
+                 sala.setTakmicenje(t);
+                 sala.setStavka(st);
+                 pronadjena.add(sala);
+             }
+             stat.close();
+             rs.close();
+         }catch(SQLException e){
+             System.out.println(e.getMessage());
+         }
+         return pronadjena;
+     }
+    
+     
+     public ArrayList<Predmet> vratiListuPredmet(Predmet p){
+         ArrayList<Predmet> list=new ArrayList<Predmet>();
+         String upit="SELECT * FROM predmet WHERE naziv LIKE '%"+p.getNaziv().trim()+"%'";
+         Connection conn=DBConnection.getInstance().getConnection();
+         try{
+             Statement s=conn.createStatement();
+             ResultSet rs=s.executeQuery(upit);
+             while(rs.next()){
+                 Predmet pr=new Predmet();
+                 pr.setId(rs.getLong("id"));
+                 pr.setNaziv(rs.getString("naziv"));
+                 list.add(pr);
+             }
+             rs.close();
+             s.close();
+         }catch(SQLException e){
+             System.out.println(e.getMessage());
+         }
+         return list;
+     }
      
    }

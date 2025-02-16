@@ -25,7 +25,8 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Pretraga takmicenja");
-        btnDetalji.setVisible(false);
+        btnDetalji1.setVisible(false);
+        btnDetalji2.setVisible(false);
         btnRezultati.setVisible(false);
         this.remove(jScrollPane1);
         popuniComboPredmet();
@@ -96,7 +97,8 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         setTitle("Pretraga takmicenja");
         this.remove(jScrollPane1);
-        btnDetalji.setVisible(false);
+        btnDetalji1.setVisible(false);
+        btnDetalji2.setVisible(false);
         btnRezultati.setVisible(false);
         popuniComboNivo();
         popuniComboPredmet();
@@ -110,8 +112,45 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
                 comboNivo.addActionListener(event->{
                     this.add(jScrollPane1);
                     try{
+                        btnDetalji1.setVisible(true);
                         tableTakmicenje.setVisible(true);
                         tableTakmicenje.setModel(new TakmicenjeTableModel((NivoTakmicenja)comboNivo.getSelectedItem()));
+                        btnDetalji1.addActionListener(ee->{
+                            try{
+                                TableModel tm=tableTakmicenje.getModel();
+                                TakmicenjeTableModel ttm=(TakmicenjeTableModel)tm;
+                                int index=tableTakmicenje.getSelectedRow();
+                                Takmicenje izabran=ttm.get(index);
+                                try{
+                                    btnDetalji1.setVisible(false);
+                                    btnDetalji2.setVisible(true);
+                                    tableTakmicenje.setVisible(true);
+                                    tableTakmicenje.setModel(new StavkaTableModel(izabran));
+                                    try{
+                                        TableModel tmm=tableTakmicenje.getModel();
+                                        StavkaTableModel stm=(StavkaTableModel)tmm;
+                                        int iindex=tableTakmicenje.getSelectedRow();
+                                        StavkaTakmicenja stavka_izabrana=stm.get(index);
+                                        btnDetalji2.addActionListener(dog->{
+                                            try{
+                                                btnDetalji2.setVisible(false);
+                                                tableTakmicenje.setVisible(true);
+                                                tableTakmicenje.setModel(new StavkeStavkiTableModel(stavka_izabrana));
+                                            }catch(Exception ev){
+                                                JOptionPane.showMessageDialog(this, "Nema rezltata pretrage","Obavestenje",JOptionPane.ERROR_MESSAGE);
+                                            }
+                                        });
+                                    }catch(ArrayIndexOutOfBoundsException e){
+                                        JOptionPane.showMessageDialog(this, "Morate izabrati iz tabele","Greska",JOptionPane.ERROR_MESSAGE);
+                                    }
+                                }catch(Exception e){
+                                    tableTakmicenje.setVisible(false);
+                                    JOptionPane.showMessageDialog(this, "Nema rezultata pretrage","Greska",JOptionPane.ERROR_MESSAGE);
+                                }
+                            }catch(ArrayIndexOutOfBoundsException e){
+                                JOptionPane.showMessageDialog(this, "Morate odabrati iz tabele","Greska",JOptionPane.ERROR_MESSAGE);
+                            }
+                        });
                     }catch(Exception ex){
                         tableTakmicenje.setVisible(false);
                         JOptionPane.showMessageDialog(this, "Nema rezultata pretrage","Obavestenje",JOptionPane.ERROR_MESSAGE);
@@ -126,11 +165,48 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
                 comboPredmet.addActionListener(event->{
                     this.add(jScrollPane1);
                     try{
+                        btnDetalji1.setVisible(true);
                         tableTakmicenje.setVisible(true);
                         tableTakmicenje.setModel(new TakmicenjeTableModel((Predmet)comboPredmet.getSelectedItem()));
-                    }catch(Exception exx){
+                        btnDetalji1.addActionListener(a->{
+                            try{
+                                TableModel tm=tableTakmicenje.getModel();
+                                TakmicenjeTableModel ttm=(TakmicenjeTableModel)tm;
+                                int index=tableTakmicenje.getSelectedRow();
+                                Takmicenje izabrann=ttm.get(index);
+                                try{
+                                    btnDetalji1.setVisible(false);
+                                    btnDetalji2.setVisible(true);
+                                    tableTakmicenje.setVisible(true);
+                                    tableTakmicenje.setModel(new StavkaTableModel(izabrann));
+                                    try{
+                                        TableModel tmm=tableTakmicenje.getModel();
+                                        StavkaTableModel stm=(StavkaTableModel)tmm;
+                                        int iindex=tableTakmicenje.getSelectedRow();
+                                        StavkaTakmicenja stavka_izabranaa=stm.get(index);
+                                        btnDetalji2.addActionListener(b->{
+                                            try{
+                                                btnDetalji2.setVisible(false);
+                                                tableTakmicenje.setVisible(true);
+                                                tableTakmicenje.setModel(new StavkeStavkiTableModel(stavka_izabranaa));
+                                            }catch(Exception ev){
+                                                JOptionPane.showMessageDialog(this, "Nema rezltata pretrage","Obavestenje",JOptionPane.ERROR_MESSAGE);
+                                            }
+                                        });
+                                    }catch(ArrayIndexOutOfBoundsException ex){
+                                        JOptionPane.showMessageDialog(this, "Morate izabrati iz tabele","Greska",JOptionPane.ERROR_MESSAGE);
+                                    }
+                                }catch(Exception e){
+                                    tableTakmicenje.setVisible(false);
+                                    JOptionPane.showMessageDialog(this, "Nema rezultata pretrage","Greska",JOptionPane.ERROR_MESSAGE);
+                                }
+                            }catch(ArrayIndexOutOfBoundsException e){
+                                JOptionPane.showMessageDialog(this, "Morate izabrati iz tabele","Greska",JOptionPane.ERROR_MESSAGE);
+                            }
+                        });
+                    }catch(Exception ex){
                         tableTakmicenje.setVisible(false);
-                        JOptionPane.showMessageDialog(this, "Nema rezultata pertrage","Obavestenje",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Nema rezultata pretrage","Obavestenje",JOptionPane.ERROR_MESSAGE);
                     }
                 });
                 break;
@@ -141,7 +217,7 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
                 comboPredmet.setVisible(false);
                 comboRazred.addActionListener(event->{
                 this.add(jScrollPane1);
-                    btnDetalji.setVisible(true);
+                    btnDetalji1.setVisible(true);
                     try{
                         tableTakmicenje.setVisible(true);
                         tableTakmicenje.setModel(new StavkaTableModel((Razred)comboRazred.getSelectedItem()));
@@ -150,7 +226,7 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
                         JOptionPane.showMessageDialog(this, "Nema rezultata pretrage","Obezvestenje",JOptionPane.ERROR_MESSAGE);
                     }
                 });
-                btnDetalji.addActionListener(ev->{
+                btnDetalji1.addActionListener(ev->{
                     try{
                         TableModel tm=tableTakmicenje.getModel();
                         StavkaTableModel stm=(StavkaTableModel)tm;
@@ -183,8 +259,9 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
         comboNivo = new javax.swing.JComboBox<>();
         lblRazred = new javax.swing.JLabel();
         comboRazred = new javax.swing.JComboBox<>();
-        btnDetalji = new javax.swing.JButton();
+        btnDetalji1 = new javax.swing.JButton();
         btnRezultati = new javax.swing.JButton();
+        btnDetalji2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -207,9 +284,11 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
 
         lblRazred.setText("odaberite razred iz kog se organizuje takmicenje:");
 
-        btnDetalji.setText("Uvid u detalje");
+        btnDetalji1.setText("Uvid u detalje");
 
         btnRezultati.setText("Unos rezultata");
+
+        btnDetalji2.setText("Uvid u detalje");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,8 +315,10 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnRezultati)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDetalji)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDetalji2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDetalji1)
                         .addGap(40, 40, 40))))
         );
         layout.setVerticalGroup(
@@ -259,8 +340,9 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDetalji)
-                    .addComponent(btnRezultati))
+                    .addComponent(btnDetalji1)
+                    .addComponent(btnRezultati)
+                    .addComponent(btnDetalji2))
                 .addGap(23, 23, 23))
         );
 
@@ -336,7 +418,8 @@ public class PretragaTakmicenjaForm extends javax.swing.JDialog {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDetalji;
+    private javax.swing.JButton btnDetalji1;
+    private javax.swing.JButton btnDetalji2;
     private javax.swing.JButton btnRezultati;
     private javax.swing.JComboBox<NivoTakmicenja> comboNivo;
     private javax.swing.JComboBox<Predmet> comboPredmet;
